@@ -11,12 +11,47 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private FixedJoystick _joystick;
 
-    [SerializeField]
-    private float _moveSpeed;
 
+    [SerializeField]
+    private float playerSpeed; // менять его можно
+    public static float _playerSpeed; // а его нет(наверное ;D)
+
+    private void Start()
+    {
+
+    }
+
+    private void Update()
+    {
+        RotationFlipPlayerTransform();
+    }
 
     private void FixedUpdate()
     {
-        _rigidbody.velocity = new Vector2(_joystick.Horizontal * _moveSpeed, _joystick.Vertical * _moveSpeed);
+        PositionPlayerTransform();
     }
+
+
+
+
+    private void PositionPlayerTransform()
+    {
+        _playerSpeed = playerSpeed;
+        _rigidbody.velocity = new Vector2(_joystick.Horizontal * _playerSpeed, _joystick.Vertical * _playerSpeed);
+    }
+
+    private void RotationFlipPlayerTransform() 
+    {
+        if (_joystick.Horizontal > 0)
+        {
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        if (_joystick.Horizontal < 0)
+        {
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+    }
+
+
+
 }
